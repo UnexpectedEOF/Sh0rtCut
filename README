@@ -1,0 +1,37 @@
+This is the README file for Sh0rtCut, soon to be the world's premier Java URL 
+shortening library! Read it.
+
+1....Statement of Mission
+2....Licensing
+3....Installation
+4....Known Bugs
+5....Other stuff?
+
+
+1. Statement of Mission
+--------------------
+Web apps, web services, and native applications alike are increasingly 
+accessing URL shorteners to save space, make identifiers look prettier,
+and to personalize them. 
+
+Why? Twitter. For the most part, URL shortening is a phenomenon necessitated 
+by Twitter's existence, and one which will likely remain with us prior to 
+Twitter's much-anticipated demise. Until that glorious dawn, however, we wish
+to provide the following to application developes through Sh0rtCut:
+	i. A unified framework for access to URL-shortening services,
+	ii. Homogenous, abstracted handling of network calls to shorteners,
+	iii. A Java library that easily drops into Android and other Java apps,
+	iv. The ability to run URL shortening proxy web services,
+	v. Kooky logic features like chaining, QR redirects, and more.	
+	
+
+2. Licensing
+--------------------
+
+
+3. Installation
+--------------------
+
+
+4. Known Bugs
+--------------------
