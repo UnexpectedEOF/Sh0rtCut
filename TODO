@@ -1,0 +1,30 @@
+There is a lot to do. Read this and find out.
+
+
+WRITING 
+-------------
+-The README needs work
+-We need a style guide and dev manual with examples or something.
+
+
+CODING
+------------- 
+-MAKE MORE SHORTENER SCRAPERS/API CALLERS!!
+-The server/chaining/crazy feature side needs work. If someone wants to work
+on this part, I'd consider any relevant pull requests after we get the 
+shorteners working in a consistent manner.
+-Adroid and most all default Java distros have some DOM parsing
+stuff. This is what we should use instead of StringBuffer "substring" methods
+with magic numbers. Anyone know of good ones (preferrably in defualt Java
+libraries) that we can use so we don't have more dependencies than are 
+necessary?
+
+
+REFACTORING AND PATTERNING
+--------------
+-The current naming convention for the shortener classes kinda sucks. 
+Come up with something else.
+-A lot of code is getting repeated within the shortener classes. Consider
+fully following a true strategy pattern whereby the DOM parsing and
+specific network stuff changes for each strategy (bitly, tinyurl, etc.),
+but everything else in the implementation stays the same. 
