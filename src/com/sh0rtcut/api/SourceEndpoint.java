@@ -36,5 +36,6 @@ public interface SourceEndpoint {
 	public List<String> getResponseUrls(); 
 	public void setRequestUrls(List<String> urls);
 	//public another simple one?
+	//Random comment
 	
 }
