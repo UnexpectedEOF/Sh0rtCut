@@ -1,0 +1,8 @@
+Use cases:
+
+Shortening
+I. App gets URL to shorten, user has selected perferred service previously. //Common, current model OK
+II. App gets URL to shorten, user prompted to select service. //Less common, but maybe used if pref'd service down
+III.
+
+Server stuff

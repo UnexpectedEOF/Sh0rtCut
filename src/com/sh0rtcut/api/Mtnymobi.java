@@ -177,11 +177,9 @@ public class Mtnymobi implements SourceEndpoint {
 		String worker;
 
 		while (it.hasNext()) {
-			System.out.println("loops");
 	        Map.Entry pairs = (Map.Entry)it.next();
 	        nameValuePairs.add(new BasicNameValuePair((String)pairs.getKey(), (String)pairs.getValue()));
 	        worker = (new String((String)pairs.getKey()+"="+(String)pairs.getValue()+"&"));
-	        System.out.println(worker);
 	        requestString = requestString.concat(worker);
 	    }
 

@@ -204,7 +204,7 @@ public class IsgdWrapper implements SourceEndpoint {
 	public String shorten(String url){
 		
 		HashMap ops = new HashMap<String, String>();
-		ops.put("URL", "http://github.com");
+		ops.put("URL", url);
 		ops.put("Irrelevant", "Value");
 		
 		setRequestParams(ops);
