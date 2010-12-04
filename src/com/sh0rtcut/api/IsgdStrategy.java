@@ -65,7 +65,7 @@ public class IsgdStrategy implements EndpointStrategy {
 
 	private IsgdStrategy(){	}
 	
-	@Override
+
 	public void init() {
 		httpClient = new DefaultHttpClient();
 		requestUrls = new ArrayList<String>();
@@ -175,7 +175,6 @@ public class IsgdStrategy implements EndpointStrategy {
 	    }
 	    
 	    
-
         try {
 		httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         	//httpPost.getEntity().
@@ -214,10 +213,13 @@ public class IsgdStrategy implements EndpointStrategy {
 	}
 
 	@Override
-	public void init(HttpGet get, HttpPost post, List<String> requestUrls,
-			List<String> responseUrls) {
-		// TODO Auto-generated method stub
-		
+	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+			List<String> respUrls) {
+		httpClient = new DefaultHttpClient();
+		requestUrls = (ArrayList<String>) reqUrls;
+		responseUrls = (ArrayList<String>) respUrls;
+		httpPost = post;
+		get = null;
 	}
 	
 	private static class IsgdHolder{

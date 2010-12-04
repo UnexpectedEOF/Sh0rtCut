@@ -25,7 +25,6 @@ import org.apache.http.client.methods.HttpPost;
  */
 public interface EndpointStrategy {
 
-	public void init();
 	public void setEndpointUrl(String url);
 	public String getEndpointUrl();
 	public String shorten(String url);		//Simplest case

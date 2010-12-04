@@ -72,12 +72,6 @@ public class BitlyStrategy implements EndpointStrategy{
 	}
 
 	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void sendRequest() {
 		// TODO Auto-generated method stub
 		

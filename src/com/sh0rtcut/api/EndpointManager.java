@@ -27,7 +27,7 @@ import com.sh0rtcut.service.RuleEngine;
  * @author D1m3
  *
  */
-public class EndpointManager implements EndpointStrategy{
+public class EndpointManager{
 	
 	/* Fields */
 	private EndpointStrategy strategy;
@@ -44,8 +44,6 @@ public class EndpointManager implements EndpointStrategy{
 	
 	/* Moar connection stuff */
 	private int timeout;			//Request timeout in milliseconds
-	
-	
 	
 	/**
 	 * @param args
@@ -74,48 +72,35 @@ public class EndpointManager implements EndpointStrategy{
 		return strategy;
 	}
 	
-	@Override
 	public String getEndpointUrl() {
 		return strategy.getResponseUrl();
 	}
 
-	@Override
 	public HashMap<String, String> getResponse()
 			throws MethodNotSupportedException {
 		return strategy.getResponse();
 	}
 
-	@Override
 	public String getResponseUrl() {
 		return responseUrls.get(0);
 	}
 
-	@Override
 	public List<String> getResponseUrls() {
 		return strategy.getResponseUrls();
 	}
 
-	@Override
 	public String getStatusCode() {
 		return String.valueOf(httpResponse.getStatusLine().getStatusCode());
 	}
 
-	@Override
-	public void init() {
-		strategy.init();
-	}
-
-	@Override
 	public void sendRequest() {
 		strategy.sendRequest();
 	}
 
-	@Override
 	public void setEndpointUrl(String url) {
 		strategy.setEndpointUrl(url);
 	}
 
-	@Override
 	public void setRequestParams(Map<String, String> opsMap)
 			throws MethodNotSupportedException {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -127,32 +112,26 @@ public class EndpointManager implements EndpointStrategy{
 	    }
 	}
 
-	@Override
 	public void setRequestUrl(String url) {
 		strategy.setRequestUrl(url);
 	}
 
-	@Override
 	public void setRequestUrls(List<String> urls) {
 		for (String url : urls)
 			requestUrls.add(new String(url));
 	}
 
-	@Override
 	public String shorten(String url) {
 		return strategy.shorten(url);
 	}
 
 
-	@Override
 	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
 			List<String> respUrls) {
 		strategy.init(get, post, requestUrls, responseUrls);
 		
 	}
 
-
-	@Override
 	public EndpointStrategy getInstance() {
 		// TODO Auto-generated method stub
 		return null;

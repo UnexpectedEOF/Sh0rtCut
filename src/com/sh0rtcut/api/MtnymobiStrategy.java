@@ -65,7 +65,7 @@ public class MtnymobiStrategy implements EndpointStrategy {
 
 	private MtnymobiStrategy(){}
 	
-	@Override
+
 	public void init() {
 		httpClient = new DefaultHttpClient();
 		requestUrls = new ArrayList<String>();

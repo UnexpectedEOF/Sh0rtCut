@@ -51,7 +51,7 @@ public class TinyurlStrategy implements EndpointStrategy{
 	
 	private TinyurlStrategy(){}
 	
-	@Override
+
 	public void init() {
 		httpClient = new DefaultHttpClient();
 		requestUrls = new ArrayList<String>();
