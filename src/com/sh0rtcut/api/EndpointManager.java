@@ -42,6 +42,10 @@ public class EndpointManager implements EndpointStrategy{
 	private HttpParams httpParams;
 	private HttpResponse httpResponse;
 	
+	/* Moar connection stuff */
+	private int timeout;			//Request timeout in milliseconds
+	
+	
 	
 	/**
 	 * @param args
@@ -145,6 +149,13 @@ public class EndpointManager implements EndpointStrategy{
 			List<String> respUrls) {
 		strategy.init(get, post, requestUrls, responseUrls);
 		
+	}
+
+
+	@Override
+	public EndpointStrategy getInstance() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

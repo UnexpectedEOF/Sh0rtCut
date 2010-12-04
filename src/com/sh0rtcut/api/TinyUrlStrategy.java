@@ -24,7 +24,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 
-public class TinyUrlStrategy implements EndpointStrategy{
+public class TinyurlStrategy implements EndpointStrategy{
 
 	
 	/* Fields */
@@ -39,7 +39,7 @@ public class TinyUrlStrategy implements EndpointStrategy{
 	
 	public static void main(String[] args) throws ClientProtocolException, IOException{
 
-		TinyUrlStrategy tiny = new TinyUrlStrategy();
+		TinyurlStrategy tiny = new TinyurlStrategy();
 		System.out.println(tiny.shorten("http://slashdot.org"));
 		
         // When HttpClient instance is no longer needed, 
@@ -49,9 +49,7 @@ public class TinyUrlStrategy implements EndpointStrategy{
 		     
 	}
 	
-	public TinyUrlStrategy(){
-		init();
-	}
+	private TinyurlStrategy(){}
 	
 	@Override
 	public void init() {
@@ -156,10 +154,12 @@ public class TinyUrlStrategy implements EndpointStrategy{
 		httpget = get;
 	}
 
+	private static class TinyurlHolder{
+		private static final TinyurlStrategy INSTANCE = new TinyurlStrategy();
+	}
+	
 	@Override
 	public EndpointStrategy getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+		return TinyurlHolder.INSTANCE;
 	}
-
 }
