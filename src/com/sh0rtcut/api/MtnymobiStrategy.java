@@ -63,9 +63,7 @@ public class MtnymobiStrategy implements EndpointStrategy {
 
 	}
 
-	public MtnymobiStrategy(){
-		init();
-	}
+	private MtnymobiStrategy(){}
 	
 	@Override
 	public void init() {
@@ -218,5 +216,23 @@ public class MtnymobiStrategy implements EndpointStrategy {
 		sendRequest();
 		return getResponseUrl();
 	}
+
+	@Override
+	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+			List<String> respUrls) {
+		httpClient = new DefaultHttpClient();
+		requestUrls = (ArrayList<String>) reqUrls;
+		responseUrls = (ArrayList<String>) respUrls;
+		httpGet = get;
+	}
 	
+	
+	private static class MtnymobiHolder{
+		private static final MtnymobiStrategy INSTANCE = new MtnymobiStrategy();
+	}
+	
+	@Override
+	public EndpointStrategy getInstance() {
+		return MtnymobiHolder.INSTANCE;
+	}
 }

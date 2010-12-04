@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.w3c.dom.Document;
 
 
@@ -25,6 +27,13 @@ import org.w3c.dom.Document;
 public class BitlyStrategy implements EndpointStrategy{
 
 	
+	
+	
+	private BitlyStrategy(){
+		
+	}
+	
+
 	
 	/**
 	 * @param args
@@ -80,7 +89,6 @@ public class BitlyStrategy implements EndpointStrategy{
 		
 	}
 
-	@Override
 	public void setRequestParams(Map<String, String> opsMap) {
 		// TODO Auto-generated method stub
 		
@@ -102,6 +110,23 @@ public class BitlyStrategy implements EndpointStrategy{
 	public String shorten(String url) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+			List<String> respUrls) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	private static class BitlyHolder{
+		private static final BitlyStrategy INSTANCE = new BitlyStrategy();
+	}
+	
+	@Override
+	public EndpointStrategy getInstance() {
+		return BitlyHolder.INSTANCE;
 	}
 
 }

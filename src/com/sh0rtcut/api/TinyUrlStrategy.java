@@ -147,4 +147,19 @@ public class TinyUrlStrategy implements EndpointStrategy{
 		return getResponseUrl();
 	}
 
+	@Override
+	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+			List<String> respUrls) {
+		httpClient = new DefaultHttpClient();
+		requestUrls = (ArrayList<String>) reqUrls;
+		responseUrls = (ArrayList<String>) respUrls;
+		httpget = get;
+	}
+
+	@Override
+	public EndpointStrategy getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -25,6 +25,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpParams;
 
 
+
 /**
  * Is.gd has no API, so it needs to be scraped. Hopefully, since all of these
  * API wrappers and scrapers both implement SourceEndpoint, business logic doesn't 
@@ -53,7 +54,7 @@ public class IsgdStrategy implements EndpointStrategy {
 	 */
 	public static void main(String[] args) {
 		IsgdStrategy isgd = new IsgdStrategy();
-		System.out.println(isgd.shorten("http://slashdot.org"));
+		System.out.println(isgd.shorten("http://is.gd/"));
 		
         // When HttpClient instance is no longer needed, 
         // shut down the connection manager to ensure
@@ -62,9 +63,7 @@ public class IsgdStrategy implements EndpointStrategy {
 
 	}
 
-	public IsgdStrategy(){
-		init();
-	}
+	private IsgdStrategy(){	}
 	
 	@Override
 	public void init() {
@@ -213,5 +212,22 @@ public class IsgdStrategy implements EndpointStrategy {
 		sendRequest();
 		return getResponseUrl();
 	}
+
+	@Override
+	public void init(HttpGet get, HttpPost post, List<String> requestUrls,
+			List<String> responseUrls) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private static class IsgdHolder{
+		private static final IsgdStrategy INSTANCE = new IsgdStrategy();
+	}
+	
+	@Override
+	public EndpointStrategy getInstance() {
+		return IsgdHolder.INSTANCE;
+	}
+
 	
 }

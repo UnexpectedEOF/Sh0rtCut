@@ -47,8 +47,11 @@ public class EndpointManager implements EndpointStrategy{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		/*EndpointManager mgr = new EndpointManager();
+		IsgdStrategy strategy = new IsgdStrategy();
+		strategy.init();
+		mgr.setStrategy(strategy);
+		System.out.println(mgr.shorten("http://twitter.com"));*/
 	}
 	
 	
@@ -134,6 +137,14 @@ public class EndpointManager implements EndpointStrategy{
 	@Override
 	public String shorten(String url) {
 		return strategy.shorten(url);
+	}
+
+
+	@Override
+	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+			List<String> respUrls) {
+		strategy.init(get, post, requestUrls, responseUrls);
+		
 	}
 
 }

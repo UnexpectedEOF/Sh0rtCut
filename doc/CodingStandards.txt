@@ -1,0 +1,18 @@
+-----Coding Standards for Sh0rtCut-----
+
+1. Strategy and Singleton pattern for shorteners
+-----
+	When creating or modifying an existing shortner class, observe the following rules:
+	A. Each shortener class must implement the EndpointStrategy interface's methods in their entirety.
+	<PUT "METHOD NOT SUPPORTED" RATIONALE HERE>.
+	B. Each shortener class must be named "XXXStrategy", where XXX is the full URI, less any punctuation,
+	of the domain name of the shortner website. Only the first letter of the domain name should be capitalized.
+	Do not include subdirectories of the site. 
+	C. Eacher shortener class must be a singleton. This means that there exists only one static instance of the class
+	which is declared within each class file. Sh0rtCut prefers that the singleton pattern be achieved with 
+	"double-checked locking." (See http://en.wikipedia.org/wiki/Singleton_pattern)
+	D. Any implementation choices left to the programmer should follow the above patterns in spirit, and attempt to 
+	reduce memory usage as much as possible.
+	
+2.  
+------
