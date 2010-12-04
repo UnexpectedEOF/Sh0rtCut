@@ -62,9 +62,7 @@ public class GooglStrategy implements EndpointStrategy {
 
 	}
 
-	public GooglStrategy(){
-		init();
-	}
+	private GooglStrategy(){}
 	
 	@Override
 	public void init() {
@@ -214,6 +212,22 @@ public class GooglStrategy implements EndpointStrategy {
 		setRequestParams(null);
 		sendRequest();
 		return getResponseUrl();
+	}
+
+	private static class GooglHolder{
+		private static final GooglStrategy INSTANCE = new GooglStrategy();
+	}
+	
+	@Override
+	public EndpointStrategy getInstance() {
+		return GooglHolder.INSTANCE;
+	}
+
+	@Override
+	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+			List<String> respUrls) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

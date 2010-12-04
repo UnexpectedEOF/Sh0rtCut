@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.MethodNotSupportedException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 
 /**
  * This interface represents the functionality that every URL shortener endpoint should
@@ -35,6 +37,8 @@ public interface EndpointStrategy {
 	public HashMap<String, String> getResponse() throws MethodNotSupportedException;
 	public List<String> getResponseUrls(); 
 	public void setRequestUrls(List<String> urls);
+	public void init(HttpGet get, HttpPost post, List<String> reqUrls, List<String> respUrls);
+	public EndpointStrategy getInstance();
 	//public another simple one?
 	//Random comment
 	
