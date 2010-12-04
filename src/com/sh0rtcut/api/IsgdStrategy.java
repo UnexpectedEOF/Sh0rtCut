@@ -17,6 +17,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.MethodNotSupportedException;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -54,7 +55,7 @@ public class IsgdStrategy implements EndpointStrategy {
 	 */
 	public static void main(String[] args) {
 		IsgdStrategy isgd = new IsgdStrategy();
-		System.out.println(isgd.shorten("http://is.gd/"));
+		System.out.println(isgd.shorten("http://twitter.com"));
 		
         // When HttpClient instance is no longer needed, 
         // shut down the connection manager to ensure
@@ -66,13 +67,6 @@ public class IsgdStrategy implements EndpointStrategy {
 	private IsgdStrategy(){	}
 	
 
-	public void init() {
-		httpClient = new DefaultHttpClient();
-		requestUrls = new ArrayList<String>();
-		responseUrls = new ArrayList<String>();
-		httpPost = new HttpPost(endpointUrl);
-	}
-	
 	@Override
 	public String getEndpointUrl() {
 		return new String(endpointUrl);
@@ -146,24 +140,6 @@ public class IsgdStrategy implements EndpointStrategy {
 	public void setEndpointUrl(String url) {
 		endpointUrl = new String(url);
 	}
-/** WORKS!!!
-	@Override
-	public void setRequestParams(Map<String, String> opsMap){
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-        nameValuePairs.add(new BasicNameValuePair("URL", "http://msn.com"));
-        httpPost = new HttpPost(endpointUrl);
-        try {
-			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		
-		//throw new MethodNotSupportedException("This class doesn't support this method.");
-		
-	}**/
 
 	public void setRequestParams(Map<String, String> opsMap){
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -171,9 +147,10 @@ public class IsgdStrategy implements EndpointStrategy {
 	    while (it.hasNext()) {
 	        Map.Entry pairs = (Map.Entry)it.next();
 	        nameValuePairs.add(new BasicNameValuePair((String)pairs.getKey(), (String)pairs.getValue()));
-	        //System.out.println(pairs.getKey() + " = " + pairs.getValue());
+	        System.out.println(pairs.getKey() + " = " + pairs.getValue());
 	    }
 	    
+	    System.out.println(nameValuePairs.get(0) );
 	    
         try {
 		httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -196,8 +173,7 @@ public class IsgdStrategy implements EndpointStrategy {
 	@Override
 	public void setRequestUrls(List<String> urls) {
 		
-		for (String url : urls)
-		   requestUrls.add(new String(url));
+		requestUrls = (ArrayList<String>) urls;
 	}
 
 	@Override
@@ -213,9 +189,9 @@ public class IsgdStrategy implements EndpointStrategy {
 	}
 
 	@Override
-	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+	public void init(HttpClient client, HttpGet get, HttpPost post, List<String> reqUrls,
 			List<String> respUrls) {
-		httpClient = new DefaultHttpClient();
+		httpClient = (DefaultHttpClient) client;
 		requestUrls = (ArrayList<String>) reqUrls;
 		responseUrls = (ArrayList<String>) respUrls;
 		httpPost = post;
@@ -226,8 +202,8 @@ public class IsgdStrategy implements EndpointStrategy {
 		private static final IsgdStrategy INSTANCE = new IsgdStrategy();
 	}
 	
-	@Override
-	public EndpointStrategy getInstance() {
+	
+	public static IsgdStrategy getInstance() {
 		return IsgdHolder.INSTANCE;
 	}
 

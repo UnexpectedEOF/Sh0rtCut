@@ -43,17 +43,19 @@ public class EndpointManager{
 	private HttpResponse httpResponse;
 	
 	/* Moar connection stuff */
-	private int timeout;			//Request timeout in milliseconds
+	private int httpTimeout;			//Request timeout in milliseconds
 	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/*EndpointManager mgr = new EndpointManager();
-		IsgdStrategy strategy = new IsgdStrategy();
-		strategy.init();
-		mgr.setStrategy(strategy);
-		System.out.println(mgr.shorten("http://twitter.com"));*/
+		EndpointManager mgr = new EndpointManager();
+		mgr.setStrategy(TinyurlStrategy.getInstance());
+		mgr.getStrategy().setRequestUrls(new ArrayList<String>());
+		mgr.setRequestUrl("http://npr.org");
+		mgr.getStrategy().sendRequest();
+		System.out.println(mgr.getStrategy().getResponseUrl());
+		System.out.println(mgr.shorten("http://msn.com"));
 	}
 	
 	
@@ -61,11 +63,15 @@ public class EndpointManager{
 		httpClient = new DefaultHttpClient();
 		requestUrls = new ArrayList<String>();
 		responseUrls = new ArrayList<String>();
-		
+		httpGet = new HttpGet();
+		httpPost = new HttpPost();
 	}
 	
 	public void setStrategy(EndpointStrategy strat){
 		strategy = strat;
+		httpPost = new HttpPost(strategy.getEndpointUrl());
+		httpGet = new HttpGet(strategy.getEndpointUrl());
+		strategy.init(httpClient, httpGet, httpPost, requestUrls, responseUrls);
 	}
 	
 	public EndpointStrategy getStrategy(){ 
@@ -126,15 +132,13 @@ public class EndpointManager{
 	}
 
 
-	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+	public void init(HttpClient client, HttpGet get, HttpPost post, List<String> reqUrls,
 			List<String> respUrls) {
-		strategy.init(get, post, requestUrls, responseUrls);
-		
+		strategy.init(client, get, post, reqUrls, respUrls);
 	}
 
-	public EndpointStrategy getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+	public void init(){
+		strategy.init(httpClient, httpGet, httpPost, requestUrls, responseUrls);
 	}
-
+	
 }

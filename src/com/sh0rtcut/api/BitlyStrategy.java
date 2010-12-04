@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.w3c.dom.Document;
@@ -107,7 +108,7 @@ public class BitlyStrategy implements EndpointStrategy{
 	}
 
 	@Override
-	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+	public void init(HttpClient client, HttpGet get, HttpPost post, List<String> reqUrls,
 			List<String> respUrls) {
 		// TODO Auto-generated method stub
 		
@@ -118,8 +119,8 @@ public class BitlyStrategy implements EndpointStrategy{
 		private static final BitlyStrategy INSTANCE = new BitlyStrategy();
 	}
 	
-	@Override
-	public EndpointStrategy getInstance() {
+
+	public static BitlyStrategy getInstance() {
 		return BitlyHolder.INSTANCE;
 	}
 

@@ -15,6 +15,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.MethodNotSupportedException;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -33,30 +34,15 @@ public class TinyurlStrategy implements EndpointStrategy{
 	private String endpointUrl = "http://tinyurl.com/api-create.php?url=";
 	
 	private static DefaultHttpClient httpClient;
-	private HttpGet httpget;
+	private HttpGet httpGet;
 	private HttpParams params;
 	private HttpResponse response;
 	
 	public static void main(String[] args) throws ClientProtocolException, IOException{
-
-		TinyurlStrategy tiny = new TinyurlStrategy();
-		System.out.println(tiny.shorten("http://slashdot.org"));
-		
-        // When HttpClient instance is no longer needed, 
-        // shut down the connection manager to ensure
-        // immediate deallocation of all system resources
-        httpClient.getConnectionManager().shutdown(); 
-		     
+	     
 	}
 	
 	private TinyurlStrategy(){}
-	
-
-	public void init() {
-		httpClient = new DefaultHttpClient();
-		requestUrls = new ArrayList<String>();
-		responseUrls = new ArrayList<String>();
-	}
 	
 	@Override
 	public String getEndpointUrl() {
@@ -91,9 +77,9 @@ public class TinyurlStrategy implements EndpointStrategy{
 
 	@Override
 	public void sendRequest() {
-		httpget = new HttpGet(endpointUrl.concat(requestUrls.get(0)));
+		httpGet = new HttpGet(endpointUrl.concat(requestUrls.get(0)));
 		try {
-			response = httpClient.execute(httpget);
+			response = httpClient.execute(httpGet);
 			HttpEntity entity = response.getEntity();
 	        
 	        InputStream is = entity.getContent();
@@ -133,9 +119,8 @@ public class TinyurlStrategy implements EndpointStrategy{
 
 	@Override
 	public void setRequestUrls(List<String> urls) {
-		
-		for (String url : urls)
-		   requestUrls.add(new String(url));
+
+		requestUrls = (ArrayList<String>) urls;
 	}
 
 	@Override
@@ -146,20 +131,21 @@ public class TinyurlStrategy implements EndpointStrategy{
 	}
 
 	@Override
-	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+	public void init(HttpClient client, HttpGet get, HttpPost post, List<String> reqUrls,
 			List<String> respUrls) {
-		httpClient = new DefaultHttpClient();
+		httpClient = (DefaultHttpClient) client;
 		requestUrls = (ArrayList<String>) reqUrls;
 		responseUrls = (ArrayList<String>) respUrls;
-		httpget = get;
+		httpGet = get;
+		post = null;
 	}
 
 	private static class TinyurlHolder{
 		private static final TinyurlStrategy INSTANCE = new TinyurlStrategy();
 	}
 	
-	@Override
-	public EndpointStrategy getInstance() {
+
+	public static EndpointStrategy getInstance() {
 		return TinyurlHolder.INSTANCE;
 	}
 }

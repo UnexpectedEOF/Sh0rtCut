@@ -17,6 +17,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.MethodNotSupportedException;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -64,7 +65,7 @@ public class GooglStrategy implements EndpointStrategy {
 
 	private GooglStrategy(){}
 	
-	@Override
+
 	public void init() {
 		httpClient = new DefaultHttpClient();
 		requestUrls = new ArrayList<String>();
@@ -218,15 +219,25 @@ public class GooglStrategy implements EndpointStrategy {
 		private static final GooglStrategy INSTANCE = new GooglStrategy();
 	}
 	
-	@Override
-	public EndpointStrategy getInstance() {
+	public static GooglStrategy getInstance() {
 		return GooglHolder.INSTANCE;
 	}
 
 	@Override
-	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+	public void init(HttpClient client, HttpGet get, HttpPost post, List<String> reqUrls,
 			List<String> respUrls) {
-		// TODO Auto-generated method stub
+		httpClient = (DefaultHttpClient) client;
+		requestUrls = (ArrayList<String>) reqUrls;
+		responseUrls = (ArrayList<String>) respUrls;
+		httpPost = post;
+		get = null;
+		
+        try {
+			httpPost.setEntity(new UrlEncodedFormEntity(null));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	

@@ -19,6 +19,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.MethodNotSupportedException;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -64,16 +65,7 @@ public class MtnymobiStrategy implements EndpointStrategy {
 	}
 
 	private MtnymobiStrategy(){}
-	
 
-	public void init() {
-		httpClient = new DefaultHttpClient();
-		requestUrls = new ArrayList<String>();
-		responseUrls = new ArrayList<String>();
-		httpGet = new HttpGet(endpointUrl);
-		//params = new DefaultedHttpParams(params, params);
-	}
-	
 	@Override
 	public String getEndpointUrl() {
 		return new String(endpointUrl);
@@ -149,24 +141,6 @@ public class MtnymobiStrategy implements EndpointStrategy {
 	public void setEndpointUrl(String url) {
 		endpointUrl = new String(url);
 	}
-/** WORKS!!!
-	@Override
-	public void setRequestParams(Map<String, String> opsMap){
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-        nameValuePairs.add(new BasicNameValuePair("URL", "http://msn.com"));
-        httpGet = new HttpPost(endpointUrl);
-        try {
-			httpGet.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		
-		//throw new MethodNotSupportedException("This class doesn't support this method.");
-		
-	}**/
 
 	public void setRequestParams(Map<String, String> opsMap){
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -201,16 +175,15 @@ public class MtnymobiStrategy implements EndpointStrategy {
 
 	@Override
 	public void setRequestUrls(List<String> urls) {
-		
-		for (String url : urls)
-		   requestUrls.add(new String(url));
+
+		requestUrls = (ArrayList<String>) urls;
 	}
 
 	@Override
 	public String shorten(String url){
 		
 		HashMap ops = new HashMap<String, String>();
-		ops.put("url", "http://github.com");
+		ops.put("url", url);
 		
 		setRequestParams(ops);
 		sendRequest();
@@ -218,12 +191,13 @@ public class MtnymobiStrategy implements EndpointStrategy {
 	}
 
 	@Override
-	public void init(HttpGet get, HttpPost post, List<String> reqUrls,
+	public void init(HttpClient client, HttpGet get, HttpPost post, List<String> reqUrls,
 			List<String> respUrls) {
-		httpClient = new DefaultHttpClient();
+		httpClient = (DefaultHttpClient) client;
 		requestUrls = (ArrayList<String>) reqUrls;
 		responseUrls = (ArrayList<String>) respUrls;
 		httpGet = get;
+		post = null;
 	}
 	
 	
@@ -231,8 +205,9 @@ public class MtnymobiStrategy implements EndpointStrategy {
 		private static final MtnymobiStrategy INSTANCE = new MtnymobiStrategy();
 	}
 	
-	@Override
-	public EndpointStrategy getInstance() {
+
+	public static MtnymobiStrategy getInstance() {
 		return MtnymobiHolder.INSTANCE;
 	}
+
 }
